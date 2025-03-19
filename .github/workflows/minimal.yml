@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  benchmark:
+  minimal-test:
     name: Run minimal steps to run benchmark-data-extract-transform
     runs-on: ubuntu-latest
     steps:
