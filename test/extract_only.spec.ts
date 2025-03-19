@@ -49,7 +49,7 @@ describe('extractData()', function () {
     it('raises an error on unexpected tool', async function () {
         const config = {
             tool: 'foo' as any,
-            outputFilePath: path.join(__dirname, 'data', 'extract', 'go_output.txt'),
+            outputFilePath: path.join(__dirname, 'data', 'extract', 'cargo_output_units.txt'),
         } as Config;
         await A.rejects(extractData(config), /^Error: FATAL: Unexpected tool: 'foo'$/);
     });
@@ -65,7 +65,7 @@ describe('extractData()', function () {
     it('raises an error when no output found', async function () {
         const config = {
             tool: 'cargo',
-            outputFilePath: path.join(__dirname, 'data', 'extract', 'go_output.txt'),
+            outputFilePath: path.join(__dirname, 'data', 'extract', 'invalid.txt'),
         } as Config;
         await A.rejects(extractData(config), /^Error: No benchmark result was found in /);
     });
