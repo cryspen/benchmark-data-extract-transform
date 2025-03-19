@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: cryspen/benchmark-data-extract-transform@${{ github.head_ref }}
+      - uses: cryspen/benchmark-data-extract-transform@wysiwys/extract-rewrite
         with:
           tool: 'cargo'
           platform: 'default'
