@@ -39,5 +39,5 @@ jobs:
         with:
           tool: 'cargo'
           platform: 'default'
-          output-file-path: ./test/data/extract/cargo_output4.txt
+          output-file-path: ./test/data/extract/criterion_output.txt
           json-out-path: output.txt
