@@ -4,13 +4,15 @@ on:
   workflow_dispatch:
   pull_request:
 
-permissions:
-  contents: write
-  deployments: write
-
 jobs:
   benchmark:
     name: Run minimal steps to run benchmark-data-extract-transform
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: cryspen/benchmark-data-extract-transform@wysiwys/extract-rewrite
+        with:
+          tool: 'cargo'
+          platform: 'default'
+          output-file-path: test/data/cargo_output.txt
+          json-out-path: output.txt
