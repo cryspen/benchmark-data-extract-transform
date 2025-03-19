@@ -19,5 +19,5 @@ jobs:
         with:
           tool: 'cargo'
           platform: 'default'
-          output-file-path: test/data/cargo_output.txt
+          output-file-path: ./test/data/cargo_output.txt
           json-out-path: output.txt
