@@ -6,7 +6,6 @@ on:
 
 jobs:
   minimal-test:
-    name: Run minimal steps to run benchmark-data-extract-transform
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
