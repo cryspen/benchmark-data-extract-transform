@@ -8,9 +8,10 @@ export interface BenchmarkResult {
     range?: string;
     unit: string;
     extra?: string;
+    platform: string;
 }
 
-function extractCargoResult(output: string): BenchmarkResult[] {
+function extractCargoResult(config: Config, output: string): BenchmarkResult[] {
     const lines = output.split(/\r?\n/g);
     const ret = [];
     const reExtract = /^test (.+)\s+\.\.\. bench:\s+([0-9,.]+) (\w+\/\w+) \(\+\/- ([0-9,.]+)\)$/;
@@ -32,6 +33,7 @@ function extractCargoResult(output: string): BenchmarkResult[] {
             value,
             range: `± ${range}`,
             unit: unit,
+            platform: config.platform,
         });
     }
 
@@ -51,7 +53,7 @@ export async function extractData(config: Config): Promise<BenchmarkResult[]> {
 
     switch (tool) {
         case 'cargo':
-            benches = extractCargoResult(output);
+            benches = extractCargoResult(config, output);
             break;
         default:
             throw new Error(`FATAL: Unexpected tool: '${tool}'`);
