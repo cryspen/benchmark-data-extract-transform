@@ -58,8 +58,8 @@ async function validateOutputFilePath(filePath: string): Promise<string> {
 }
 async function validateJsonOutPath(filePath: string): Promise<string> {
     try {
-	// TODO: validate
-	return filePath;
+        // TODO: validate
+        return filePath;
     } catch (err) {
         throw new Error(`Invalid value for 'json-out-path' input: ${err}`);
     }
@@ -71,6 +71,12 @@ function validateName(name: string) {
     }
     throw new Error('Name must not be empty');
 }
+function validatePlatform(platform: string) {
+    if (platform) {
+        return;
+    }
+    throw new Error('Platform must not be empty');
+}
 
 export async function configFromJobInput(): Promise<Config> {
     const tool: string = core.getInput('tool');
@@ -80,6 +86,7 @@ export async function configFromJobInput(): Promise<Config> {
     const platform: string = core.getInput('platform');
 
     validateName(name);
+    validatePlatform(platform);
     validateToolType(tool);
     outputFilePath = await validateOutputFilePath(outputFilePath);
     jsonOutPath = await validateJsonOutPath(jsonOutPath);

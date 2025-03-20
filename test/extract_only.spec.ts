@@ -36,6 +36,7 @@ describe('extractData()', function () {
         });
         const outputFilePath = path.join(__dirname, 'data', 'extract', test.file);
         const config = {
+            platform: 'ubuntu-latest',
             tool: test.tool,
             outputFilePath,
         } as Config;
@@ -48,6 +49,7 @@ describe('extractData()', function () {
 
     it('raises an error on unexpected tool', async function () {
         const config = {
+            platform: 'ubuntu-latest',
             tool: 'foo' as any,
             outputFilePath: path.join(__dirname, 'data', 'extract', 'cargo_output_units.txt'),
         } as Config;
@@ -56,6 +58,7 @@ describe('extractData()', function () {
 
     it('raises an error when output file is not readable', async function () {
         const config = {
+            platform: 'ubuntu-latest',
             tool: 'cargo',
             outputFilePath: 'path/does/not/exist.txt',
         } as Config;
@@ -64,6 +67,7 @@ describe('extractData()', function () {
 
     it('raises an error when no output found', async function () {
         const config = {
+            platform: 'ubuntu-latest',
             tool: 'cargo',
             outputFilePath: path.join(__dirname, 'data', 'extract', 'invalid.txt'),
         } as Config;
@@ -103,18 +107,19 @@ describe('localWriteBenchmark()', function () {
             now: 1712131503296,
         });
         const outputFilePath = path.join(__dirname, 'data', 'extract', test.file);
-	const jsonOutPath = "test.txt"; // TODO: tempfile
+        const jsonOutPath = 'test.txt'; // TODO: tempfile
         const config = {
+            platform: 'ubuntu-latest',
             tool: test.tool,
             outputFilePath,
-	    jsonOutPath,
+            jsonOutPath,
         } as Config;
         const benches = await extractData(config);
 
         expect(benches).toMatchSnapshot();
 
-	// write out
-	localWriteBenchmark(benches, config);
+        // write out
+        localWriteBenchmark(benches, config);
 
         jest.useRealTimers();
     });

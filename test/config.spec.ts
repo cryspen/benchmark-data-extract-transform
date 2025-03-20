@@ -33,8 +33,8 @@ describe('configFromJobInput()', function () {
         name: 'Benchmark',
         tool: 'cargo',
         'output-file-path': 'out.txt',
-	'json-out-path': 'test.txt', // TODO
-	platform: 'any',
+        'json-out-path': 'test.txt', // TODO
+        platform: 'any',
     };
 
     const validationTests: Array<{
@@ -72,13 +72,13 @@ describe('configFromJobInput()', function () {
     interface ExpectedResult {
         name: string;
         tool: string;
-	platform: string;
+        platform: string;
     }
 
     const defaultExpected: ExpectedResult = {
         name: 'Benchmark',
         tool: 'cargo',
-	platform: 'platform',
+        platform: 'platform',
     };
 
     const returnedConfigTests: Array<{
