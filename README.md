@@ -12,3 +12,19 @@ Currently supported sources:
 - `platform` (required): a string describing the platform
 - `output-file-path` (required): a path to a file containing the output of the benchmark tool
 - `data-out-path` (required): the path where the output of the action should be written
+
+## Output data format
+
+The output will be written to `data-out-path` in a standardized JSON format:
+```json
+[
+    {
+        "name": "My Custom Smaller Is Better Benchmark - Memory Used",
+        "unit": "Megabytes",
+        "platform": "ubuntu-latest",
+        "value": 100,
+        "range": "3",
+        "extra": "Value for Tooltip: 25\nOptional Num #2: 100\nAnything Else!"
+    }
+]
+```
