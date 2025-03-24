@@ -24,7 +24,6 @@ The output will be written to `data-out-path` in a standardized JSON format:
         "platform": "ubuntu-latest",
         "value": 100,
         "range": "3",
-        "extra": "Value for Tooltip: 25\nOptional Num #2: 100\nAnything Else!"
     }
 ]
 ```
