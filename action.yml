@@ -11,7 +11,7 @@ inputs:
     required: true
     default: 'Benchmark'
   tool:
-    description: 'Tool to use get benchmark output. One of "cargo"...'
+    description: 'Tool to use to get benchmark output. One of "cargo"...'
     required: true
   platform:
     description: 'A string describing the platform'
