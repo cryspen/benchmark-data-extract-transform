@@ -9,7 +9,7 @@ export interface Config {
     platform: string;
     tool: ToolType;
     outputFilePath: string;
-    jsonOutPath: string;
+    dataOutPath: string;
 }
 
 export const VALID_TOOLS = ['cargo'] as const;
@@ -56,12 +56,12 @@ async function validateOutputFilePath(filePath: string): Promise<string> {
         throw new Error(`Invalid value for 'output-file-path' input: ${err}`);
     }
 }
-async function validateJsonOutPath(filePath: string): Promise<string> {
+async function validateDataOutPath(filePath: string): Promise<string> {
     try {
         // TODO: validate
         return filePath;
     } catch (err) {
-        throw new Error(`Invalid value for 'json-out-path' input: ${err}`);
+        throw new Error(`Invalid value for 'data-out-path' input: ${err}`);
     }
 }
 
@@ -81,7 +81,7 @@ function validatePlatform(platform: string) {
 export async function configFromJobInput(): Promise<Config> {
     const tool: string = core.getInput('tool');
     let outputFilePath: string = core.getInput('output-file-path');
-    let jsonOutPath: string = core.getInput('json-out-path');
+    let dataOutPath: string = core.getInput('data-out-path');
     const name: string = core.getInput('name');
     const platform: string = core.getInput('platform');
 
@@ -89,13 +89,13 @@ export async function configFromJobInput(): Promise<Config> {
     validatePlatform(platform);
     validateToolType(tool);
     outputFilePath = await validateOutputFilePath(outputFilePath);
-    jsonOutPath = await validateJsonOutPath(jsonOutPath);
+    dataOutPath = await validateDataOutPath(dataOutPath);
 
     return {
         name,
         tool,
         outputFilePath,
-        jsonOutPath,
+        dataOutPath,
         platform,
     };
 }

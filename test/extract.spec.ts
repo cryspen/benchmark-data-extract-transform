@@ -107,12 +107,12 @@ describe('localWriteBenchmark()', function () {
             now: 1712131503296,
         });
         const outputFilePath = path.join(__dirname, 'data', 'extract', test.file);
-        const jsonOutPath = 'test.txt'; // TODO: tempfile
+        const dataOutPath = 'test.txt'; // TODO: tempfile
         const config = {
             platform: 'ubuntu-latest',
             tool: test.tool,
             outputFilePath,
-            jsonOutPath,
+            dataOutPath,
         } as Config;
         const benches = await extractData(config);
 

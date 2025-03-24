@@ -33,7 +33,7 @@ describe('configFromJobInput()', function () {
         name: 'Benchmark',
         tool: 'cargo',
         'output-file-path': 'out.txt',
-        'json-out-path': 'test.txt', // TODO
+        'data-out-path': 'test.txt', // TODO
         platform: 'any',
     };
 

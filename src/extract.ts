@@ -42,7 +42,7 @@ function extractCargoResult(config: Config, output: string): BenchmarkResult[] {
 
 export async function localWriteBenchmark(benches: BenchmarkResult[], config: Config) {
     const data = JSON.stringify(benches);
-    const outPath = config.jsonOutPath;
+    const outPath = config.dataOutPath;
     await fs.writeFile(outPath, data);
 }
 
