@@ -1,0 +1,13 @@
+inputs:
+  name:
+    type: string
+  tool:
+    type: enum
+    allowed-values:
+      - cargo
+  platform:
+    type: string
+  output-file-path:
+    type: string
+  data-out-path:
+    type: string
