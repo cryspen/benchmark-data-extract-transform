@@ -1,33 +1,21 @@
 name: Example for minimal setup
-on:
-  push:
-    branches:
-      - master
 
-permissions:
-  contents: write
-  deployments: write
+on:
+  workflow_dispatch:
+  pull_request:
 
 jobs:
-  benchmark:
-    name: Run minimal steps to run github-action-benchmark
+  minimal-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-go@v4
+      - name: "build"
+        run: |
+          npm install
+          npm run build 
+      - uses: ./ # local action in repo
         with:
-          go-version: "stable"
-      - name: Run benchmark
-        run: cd examples/go && go test -bench 'BenchmarkFib' | tee output.txt
-      - name: Download previous benchmark data
-        uses: actions/cache@v4
-        with:
-          path: ./cache
-          key: ${{ runner.os }}-benchmark
-      - name: Store benchmark result
-        uses: benchmark-action/github-action-benchmark@v1
-        with:
-          tool: 'go'
-          output-file-path: examples/go/output.txt
-          external-data-json-path: ./cache/benchmark-data.json
-          fail-on-alert: true
+          tool: 'cargo'
+          platform: 'default'
+          output-file-path: ./test/data/extract/cargo_output.txt
+          data-out-path: output.txt
