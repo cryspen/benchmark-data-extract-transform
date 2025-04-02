@@ -28,7 +28,7 @@ function extractMetadataFromName(name_string: string): NameMetadata {
     // split by separator
     const values = name_string.split('/');
 
-    // if only one arg provided, just returnname
+    // if only one arg provided, just return name
     if (values.length === 1) {
         const name = name_string;
         return { name, keySize: undefined, category: undefined, platform: undefined, api: undefined };
