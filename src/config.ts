@@ -71,11 +71,11 @@ function validateName(name: string) {
     }
     throw new Error('Name must not be empty');
 }
-function validatePlatform(os: string) {
+function validateOs(os: string) {
     if (os) {
         return;
     }
-    throw new Error('Platform must not be empty');
+    throw new Error('Os must not be empty');
 }
 
 export async function configFromJobInput(): Promise<Config> {
@@ -86,7 +86,7 @@ export async function configFromJobInput(): Promise<Config> {
     const os: string = core.getInput('os');
 
     validateName(name);
-    validatePlatform(os);
+    validateOs(os);
     validateToolType(tool);
     outputFilePath = await validateOutputFilePath(outputFilePath);
     dataOutPath = await validateDataOutPath(dataOutPath);
