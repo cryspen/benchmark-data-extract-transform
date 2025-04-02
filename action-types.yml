@@ -5,7 +5,7 @@ inputs:
     type: enum
     allowed-values:
       - cargo
-  platform:
+  os:
     type: string
   output-file-path:
     type: string

@@ -8,7 +8,7 @@ export interface BenchmarkResult {
     range?: string;
     unit: string;
     extra?: string;
-    platform: string;
+    os: string;
 }
 
 function extractCargoResult(config: Config, output: string): BenchmarkResult[] {
@@ -33,7 +33,7 @@ function extractCargoResult(config: Config, output: string): BenchmarkResult[] {
             value,
             range: `± ${range}`,
             unit: unit,
-            platform: config.platform,
+            os: config.os,
         });
     }
 

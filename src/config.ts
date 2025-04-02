@@ -6,7 +6,7 @@ import * as path from 'path';
 export type ToolType = typeof VALID_TOOLS[number];
 export interface Config {
     name: string;
-    platform: string;
+    os: string;
     tool: ToolType;
     outputFilePath: string;
     dataOutPath: string;
@@ -71,8 +71,8 @@ function validateName(name: string) {
     }
     throw new Error('Name must not be empty');
 }
-function validatePlatform(platform: string) {
-    if (platform) {
+function validatePlatform(os: string) {
+    if (os) {
         return;
     }
     throw new Error('Platform must not be empty');
@@ -83,10 +83,10 @@ export async function configFromJobInput(): Promise<Config> {
     let outputFilePath: string = core.getInput('output-file-path');
     let dataOutPath: string = core.getInput('data-out-path');
     const name: string = core.getInput('name');
-    const platform: string = core.getInput('platform');
+    const os: string = core.getInput('os');
 
     validateName(name);
-    validatePlatform(platform);
+    validatePlatform(os);
     validateToolType(tool);
     outputFilePath = await validateOutputFilePath(outputFilePath);
     dataOutPath = await validateDataOutPath(dataOutPath);
@@ -96,6 +96,6 @@ export async function configFromJobInput(): Promise<Config> {
         tool,
         outputFilePath,
         dataOutPath,
-        platform,
+        os,
     };
 }
