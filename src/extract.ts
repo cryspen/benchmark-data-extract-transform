@@ -10,30 +10,46 @@ export interface BenchmarkResult {
     os: string;
 
     // from NameMetadata
-    category: string;
-    keySize: number;
+    category: string | undefined;
+    keySize: number | undefined;
     name: string;
-    platform: string;
-    api: string;
+    platform: string | undefined;
+    api: string | undefined;
 }
 
 interface NameMetadata {
-    category: string;
-    keySize: number;
+    category: string | undefined;
+    keySize: number | undefined;
     name: string;
-    platform: string;
-    api: string;
+    platform: string | undefined;
+    api: string | undefined;
 }
 function extractMetadataFromName(name_string: string): NameMetadata {
     // split by separator
     const values = name_string.split('/');
 
+    // if only one arg provided, just returnname
+    if (values.length == 1) {
+        const name = name_string;
+        return { name, keySize: undefined, category: undefined, platform: undefined, api: undefined };
+    }
+
     // extract by position
-    const category = values[0];
-    const keySize = parseInt(values[1]);
-    const name = values[2];
-    const platform = values[3];
-    const api = values[4];
+    const category = values[0] === '' ? undefined : values[0];
+
+    // If keySize not a number, use `undefined`
+    const keySizeParsed = parseInt(values[1]);
+
+    const keySize = isNaN(keySizeParsed) ? undefined : keySizeParsed;
+
+    // if name is not defined, keep entire name_string as name
+    let name = values[2];
+    if (name === undefined || name === '') {
+        name = name_string;
+    }
+
+    const platform = values[3] === '' ? undefined : values[3];
+    const api = values[4] === '' ? undefined : values[4];
 
     return {
         category,
