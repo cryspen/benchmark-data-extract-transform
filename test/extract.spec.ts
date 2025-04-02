@@ -123,7 +123,7 @@ describe('localWriteBenchmark()', function () {
         expect(benches).toMatchSnapshot();
 
         // write out
-        localWriteBenchmark(benches, config);
+        await localWriteBenchmark(benches, config);
 
         jest.useRealTimers();
     });
