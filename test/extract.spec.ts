@@ -28,6 +28,10 @@ describe('extractData()', function () {
             tool: 'cargo',
             file: 'criterion_output.txt',
         },
+        {
+            tool: 'cargo',
+            file: 'criterion_output_with_metadata_format.txt',
+        },
     ];
 
     it.each(normalCases)(`extracts benchmark output from $tool - $file`, async function (test) {
@@ -36,7 +40,7 @@ describe('extractData()', function () {
         });
         const outputFilePath = path.join(__dirname, 'data', 'extract', test.file);
         const config = {
-            platform: 'ubuntu-latest',
+            os: 'ubuntu-latest',
             tool: test.tool,
             outputFilePath,
         } as Config;
@@ -49,7 +53,7 @@ describe('extractData()', function () {
 
     it('raises an error on unexpected tool', async function () {
         const config = {
-            platform: 'ubuntu-latest',
+            os: 'ubuntu-latest',
             tool: 'foo' as any,
             outputFilePath: path.join(__dirname, 'data', 'extract', 'cargo_output_units.txt'),
         } as Config;
@@ -58,7 +62,7 @@ describe('extractData()', function () {
 
     it('raises an error when output file is not readable', async function () {
         const config = {
-            platform: 'ubuntu-latest',
+            os: 'ubuntu-latest',
             tool: 'cargo',
             outputFilePath: 'path/does/not/exist.txt',
         } as Config;
@@ -67,7 +71,7 @@ describe('extractData()', function () {
 
     it('raises an error when no output found', async function () {
         const config = {
-            platform: 'ubuntu-latest',
+            os: 'ubuntu-latest',
             tool: 'cargo',
             outputFilePath: path.join(__dirname, 'data', 'extract', 'invalid.txt'),
         } as Config;
@@ -109,7 +113,7 @@ describe('localWriteBenchmark()', function () {
         const outputFilePath = path.join(__dirname, 'data', 'extract', test.file);
         const dataOutPath = 'test.txt'; // TODO: tempfile
         const config = {
-            platform: 'ubuntu-latest',
+            os: 'ubuntu-latest',
             tool: test.tool,
             outputFilePath,
             dataOutPath,
@@ -119,7 +123,7 @@ describe('localWriteBenchmark()', function () {
         expect(benches).toMatchSnapshot();
 
         // write out
-        localWriteBenchmark(benches, config);
+        await localWriteBenchmark(benches, config);
 
         jest.useRealTimers();
     });

@@ -3,12 +3,61 @@ import { promises as fs } from 'fs';
 import { Config } from './config';
 
 export interface BenchmarkResult {
-    name: string;
     value: number;
     range?: string;
     unit: string;
     extra?: string;
-    platform: string;
+    os: string;
+
+    // from NameMetadata
+    category: string | undefined;
+    keySize: number | undefined;
+    name: string;
+    platform: string | undefined;
+    api: string | undefined;
+}
+
+interface NameMetadata {
+    category: string | undefined;
+    keySize: number | undefined;
+    name: string;
+    platform: string | undefined;
+    api: string | undefined;
+}
+function extractMetadataFromName(name_string: string): NameMetadata {
+    // split by separator
+    const values = name_string.split('/');
+
+    // if only one arg provided, just return name
+    if (values.length === 1) {
+        const name = name_string;
+        return { name, keySize: undefined, category: undefined, platform: undefined, api: undefined };
+    }
+
+    // extract by position
+    const category = values[0] === '' ? undefined : values[0];
+
+    // If keySize not a number, use `undefined`
+    const keySizeParsed = parseInt(values[1]);
+
+    const keySize = isNaN(keySizeParsed) ? undefined : keySizeParsed;
+
+    // if name is not defined, keep entire name_string as name
+    let name = values[2];
+    if (name === undefined || name === '') {
+        name = name_string;
+    }
+
+    const platform = values[3] === '' ? undefined : values[3];
+    const api = values[4] === '' ? undefined : values[4];
+
+    return {
+        category,
+        keySize,
+        name,
+        platform,
+        api,
+    };
 }
 
 function extractCargoResult(config: Config, output: string): BenchmarkResult[] {
@@ -23,17 +72,24 @@ function extractCargoResult(config: Config, output: string): BenchmarkResult[] {
             continue;
         }
 
-        const name = m[1].trim();
+        const name_string = m[1].trim();
         const value = parseFloat(m[2].replace(reComma, ''));
         const unit = m[3].trim();
         const range = m[4].replace(reComma, '');
 
+        // TODO: error handling
+        const { category, keySize, name, platform, api } = extractMetadataFromName(name_string);
+
         ret.push({
-            name,
             value,
             range: `± ${range}`,
             unit: unit,
-            platform: config.platform,
+            os: config.os,
+            category,
+            keySize,
+            name,
+            platform,
+            api,
         });
     }
 

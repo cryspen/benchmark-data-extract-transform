@@ -9,21 +9,29 @@ Currently supported sources:
 ## Fields
 - `name` (required): name of the benchmark
 - `tool` (required): tool used to get benchmark output. One of `["cargo"]`
-- `platform` (required): a string describing the platform
+- `os` (required): a string describing the os
 - `output-file-path` (required): a path to a file containing the output of the benchmark tool
 - `data-out-path` (required): the path where the output of the action should be written
+
+## Metadata format
+
+The benchmark name in the `cargo` benchmarks can be provided as a `/`-separated string with the format `category/key size/name/platform/api`. The key size should be an integer. Some fields in this string can be left blank. Any unspecified or invalid fields will be parsed to `undefined`.
 
 ## Output data format
 
 The output will be written to `data-out-path` in a standardized JSON format:
 ```json
 [
-    {
-        "name": "My Custom Smaller Is Better Benchmark - Memory Used",
-        "unit": "Megabytes",
-        "platform": "ubuntu-latest",
-        "value": 100,
-        "range": "3",
-    }
+  {
+    "api": "unpacked",
+    "category": "ML-KEM",
+    "keySize": 768,
+    "name": "PK Validation",
+    "os": "ubuntu-latest",
+    "platform": "neon",
+    "range": "± 123",
+    "unit": "ns/iter",
+    "value": 12314,
+  },
 ]
 ```
