@@ -78,20 +78,20 @@ function validateName(name) {
     }
     throw new Error('Name must not be empty');
 }
-function validatePlatform(platform) {
-    if (platform) {
+function validateOs(os) {
+    if (os) {
         return;
     }
-    throw new Error('Platform must not be empty');
+    throw new Error('Os must not be empty');
 }
 async function configFromJobInput() {
     const tool = core.getInput('tool');
     let outputFilePath = core.getInput('output-file-path');
     let dataOutPath = core.getInput('data-out-path');
     const name = core.getInput('name');
-    const platform = core.getInput('platform');
+    const os = core.getInput('os');
     validateName(name);
-    validatePlatform(platform);
+    validateOs(os);
     validateToolType(tool);
     outputFilePath = await validateOutputFilePath(outputFilePath);
     dataOutPath = await validateDataOutPath(dataOutPath);
@@ -100,7 +100,7 @@ async function configFromJobInput() {
         tool,
         outputFilePath,
         dataOutPath,
-        platform,
+        os,
     };
 }
 exports.configFromJobInput = configFromJobInput;
