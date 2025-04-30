@@ -32,6 +32,10 @@ describe('extractData()', function () {
             tool: 'cargo',
             file: 'criterion_output_with_metadata_format.txt',
         },
+        {
+            tool: 'cargo',
+            file: 'custom.txt',
+        },
     ];
 
     it.each(normalCases)(`extracts benchmark output from $tool - $file`, async function (test) {

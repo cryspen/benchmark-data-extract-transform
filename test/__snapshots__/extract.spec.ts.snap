@@ -261,6 +261,22 @@ exports[`extractData() extracts benchmark output from cargo - criterion_output_w
 ]
 `;
 
+exports[`extractData() extracts benchmark output from cargo - custom.txt 1`] = `
+[
+  {
+    "api": undefined,
+    "category": "libcrux ML-DSA",
+    "keySize": 44,
+    "name": "KeyGen",
+    "os": "ubuntu-latest",
+    "platform": "portable",
+    "range": undefined,
+    "unit": "μs/iter",
+    "value": 62,
+  },
+]
+`;
+
 exports[`localWriteBenchmark() extracts benchmark output from cargo - cargo_output.txt 1`] = `
 [
   {

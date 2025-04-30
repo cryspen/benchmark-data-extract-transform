@@ -63,7 +63,7 @@ function extractMetadataFromName(name_string: string): NameMetadata {
 function extractCargoResult(config: Config, output: string): BenchmarkResult[] {
     const lines = output.split(/\r?\n/g);
     const ret = [];
-    const reExtract = /^test (.+)\s+\.\.\. bench:\s+([0-9,.]+) (\w+\/\w+) \(\+\/- ([0-9,.]+)\)$/;
+    const reExtract = /^test (.+)\s+\.\.\. bench:\s+([0-9,.]+) ([0-9A-Za-z_\u03BC]+\/\w+)( \(\+\/- ([0-9,.]+)\))?$/;
     const reComma = /,/g;
 
     for (const line of lines) {
@@ -75,14 +75,16 @@ function extractCargoResult(config: Config, output: string): BenchmarkResult[] {
         const name_string = m[1].trim();
         const value = parseFloat(m[2].replace(reComma, ''));
         const unit = m[3].trim();
-        const range = m[4].replace(reComma, '');
+
+        // if the range is provided, replace the prefix, the suffix, and any commas.
+        const range = m[4] ? m[4].replace(reComma, '').replace(' (+/- ', '± ').replace(')', '') : undefined;
 
         // TODO: error handling
         const { category, keySize, name, platform, api } = extractMetadataFromName(name_string);
 
         ret.push({
             value,
-            range: `± ${range}`,
+            range,
             unit: unit,
             os: config.os,
             category,
