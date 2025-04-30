@@ -1,5 +1,8 @@
 test/data
 coverage
 dist
+scripts/
 **/*.md
 **/*.txt
+**/*.sh
+**/*.yml
