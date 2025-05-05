@@ -1,1 +1,1 @@
-test category=libcrux ML-DSA/keySize=44/name=KeyGen/platform=portable ... bench:	62 μs/iter
+test category=libcrux ML-DSA,keySize=44,name=KeyGen,platform=portable ... bench:	62 μs/iter

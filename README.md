@@ -15,7 +15,7 @@ Currently supported sources:
 
 ## Metadata format
 
-The benchmark name in the `cargo` benchmarks can be provided as a `/`-separated string where each item represents a key-value pair with the format `key=value`, e.g. `category=ML-KEM/keySize=44/name=PK Validation/platform=neon/api=unpacked`.
+The benchmark name in the `cargo` benchmarks can be provided as a `,`-separated string where each item represents a key-value pair with the format `key=value`, e.g. `category=ML-KEM,keySize=44,name=PK Validation,platform=neon,api=unpacked`.
 
 Alternatively, the benchmark name can be provided as a simple string, which will then be set as the value of the `name` key. This will only happen if there are no `key=value` pairs found in the benchmark name.
 

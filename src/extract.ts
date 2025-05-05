@@ -15,7 +15,7 @@ export interface BenchmarkResult {
 
 function addNameMetadataToResult(result: BenchmarkResult, nameString: string) {
     // split by separator
-    const keyValuePairs = nameString.split('/');
+    const keyValuePairs = nameString.split(',');
 
     let foundAtLeastOne = false;
 
