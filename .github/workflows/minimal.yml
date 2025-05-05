@@ -18,4 +18,4 @@ jobs:
           tool: 'cargo'
           os: 'ubuntu-latest'
           output-file-path: ./test/data/extract/cargo_output.txt
-          data-out-path: output.txt
+          data-out-path: output.json
