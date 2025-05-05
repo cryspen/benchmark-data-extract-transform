@@ -17,10 +17,10 @@ function addNameMetadataToResult(result: BenchmarkResult, name_string: string) {
     // split by separator
     const keyValuePairs = name_string.split('/');
 
-    for (let pair of keyValuePairs) {
+    for (const pair of keyValuePairs) {
         const items = pair.split('=');
-        if (items.length != 2) {
-            if (keyValuePairs.length == 1) {
+        if (items.length !== 2) {
+            if (keyValuePairs.length === 1) {
                 // This is the only potential key-value pair,
                 // but it is invalid.
                 // In this case, just use the string as the name.
