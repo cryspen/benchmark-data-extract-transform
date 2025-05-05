@@ -21,22 +21,22 @@ jobs:
           tool: 'cargo'
           os: 'ubuntu-latest'
           output-file-path: ./test/data/extract/cargo_output.txt
-          data-out-path: output.txt
+          data-out-path: output.json
       - uses: ./ # local action in repo
         with:
           tool: 'cargo'
           os: 'ubuntu-latest'
           output-file-path: ./test/data/extract/cargo_output2.txt
-          data-out-path: output.txt
+          data-out-path: output.json
       - uses: ./ # local action in repo
         with:
           tool: 'cargo'
           os: 'ubuntu-latest'
           output-file-path: ./test/data/extract/cargo_output3.txt
-          data-out-path: output.txt
+          data-out-path: output.json
       - uses: ./ # local action in repo
         with:
           tool: 'cargo'
           os: 'ubuntu-latest'
           output-file-path: ./test/data/extract/criterion_output.txt
-          data-out-path: output.txt
+          data-out-path: output.json
