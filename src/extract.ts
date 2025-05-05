@@ -17,7 +17,7 @@ function addNameMetadataToResult(result: BenchmarkResult, nameString: string) {
     // split by separator
     const keyValuePairs = nameString.split('/');
 
-    let foundAtLeastOne: boolean = false;
+    let foundAtLeastOne = false;
 
     for (const pair of keyValuePairs) {
         const items = pair.split('=');
