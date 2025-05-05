@@ -13,25 +13,27 @@ export interface BenchmarkResult {
     [key: string]: any;
 }
 
-function addNameMetadataToResult(result: BenchmarkResult, name_string: string) {
+function addNameMetadataToResult(result: BenchmarkResult, nameString: string) {
     // split by separator
-    const keyValuePairs = name_string.split('/');
+    const keyValuePairs = nameString.split('/');
+
+    let foundAtLeastOne: boolean = false;
 
     for (const pair of keyValuePairs) {
         const items = pair.split('=');
         if (items.length !== 2) {
-            if (keyValuePairs.length === 1) {
-                // This is the only potential key-value pair,
-                // but it is invalid.
-                // In this case, just use the string as the name.
-                result.name = pair;
-                return;
-            }
             // invalid key-value pair
             continue;
         }
+        foundAtLeastOne = true;
         const [key, value] = items;
         result[key] = value;
+    }
+
+    if (!foundAtLeastOne) {
+        // no key-value pairs found in string
+        // return the entire string as the name
+        result.name = nameString;
     }
 }
 
