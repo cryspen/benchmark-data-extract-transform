@@ -2,6 +2,7 @@ import * as path from 'path';
 import { strict as A } from 'assert';
 import { Config, ToolType } from '../src/config';
 import { extractData, localWriteBenchmark } from '../src/extract';
+import * as os from 'os';
 
 describe('extractData()', function () {
     const normalCases: Array<{
@@ -31,6 +32,10 @@ describe('extractData()', function () {
         {
             tool: 'cargo',
             file: 'criterion_output_with_metadata_format.txt',
+        },
+        {
+            tool: 'cargo',
+            file: 'custom.txt',
         },
     ];
 
@@ -111,7 +116,9 @@ describe('localWriteBenchmark()', function () {
             now: 1712131503296,
         });
         const outputFilePath = path.join(__dirname, 'data', 'extract', test.file);
-        const dataOutPath = 'test.txt'; // TODO: tempfile
+
+        const dataOutPath = path.join(os.tmpdir(), 'benchmark-test.json');
+
         const config = {
             os: 'ubuntu-latest',
             tool: test.tool,

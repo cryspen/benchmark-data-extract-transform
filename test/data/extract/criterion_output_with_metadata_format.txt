@@ -2,13 +2,13 @@ WARNING: HTML report generation will become a non-default optional feature in Cr
 This feature is being moved to cargo-criterion (https://github.com/bheisler/cargo-criterion) and will be optional in a future version of Criterion.rs. To silence this warning, either switch to cargo-criterion or enable the 'html_reports' feature in your Cargo.toml.
 
 Gnuplot not found, using plotters backend
-test ML-KEM/1024/PK Validation// ... bench:         329 ns/iter (+/- 4)
+test category=ML-KEM,keySize=1024,name=PK Validation ... bench:         329 ns/iter (+/- 4)
 
-test ML-KEM/512/PK Validation/neon/unpacked ... bench:        3268 ns/iter (+/- 47)
+test category=ML-KEM,keySize=512,name=PK Validation,platform=neon,api=unpacked ... bench:        3268 ns/iter (+/- 47)
 
-test ML-KEM/768/PK Validation/neon/unpacked ... bench:       12314 ns/iter (+/- 123)
+test category=ML-KEM,keySize=768,name=PK Validation,platform=neon,api=unpacked ... bench:       12314 ns/iter (+/- 123)
 
 
 Warning: Unable to complete 100 samples in 5.0s. You may wish to increase target time to 8.5s, enable flat sampling, or reduce sample count to 50.
-test ML-KEM/512/PK Validation/neon/unpacked (external random) ... bench:     1672496 ns/iter (+/- 10166)
+test category=ML-KEM,keySize=512,name=PK Validation,platform=neon,api=unpacked (external random) ... bench:     1672496 ns/iter (+/- 10166)
 

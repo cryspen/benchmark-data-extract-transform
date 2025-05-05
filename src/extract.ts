@@ -9,61 +9,41 @@ export interface BenchmarkResult {
     extra?: string;
     os: string;
 
-    // from NameMetadata
-    category: string | undefined;
-    keySize: number | undefined;
-    name: string;
-    platform: string | undefined;
-    api: string | undefined;
+    // from metadata
+    [key: string]: any;
 }
 
-interface NameMetadata {
-    category: string | undefined;
-    keySize: number | undefined;
-    name: string;
-    platform: string | undefined;
-    api: string | undefined;
-}
-function extractMetadataFromName(name_string: string): NameMetadata {
+function addNameMetadataToResult(result: BenchmarkResult, nameString: string) {
     // split by separator
-    const values = name_string.split('/');
+    const keyValuePairs = nameString.split(',');
 
-    // if only one arg provided, just return name
-    if (values.length === 1) {
-        const name = name_string;
-        return { name, keySize: undefined, category: undefined, platform: undefined, api: undefined };
+    let foundAtLeastOne = false;
+
+    for (const pair of keyValuePairs) {
+        const items = pair.split('=');
+        if (items.length !== 2) {
+            // invalid key-value pair
+            continue;
+        }
+        const [key, value] = items;
+        result[key] = value;
+
+        // at least one key-value pair was found
+        foundAtLeastOne = true;
     }
 
-    // extract by position
-    const category = values[0] === '' ? undefined : values[0];
-
-    // If keySize not a number, use `undefined`
-    const keySizeParsed = parseInt(values[1]);
-
-    const keySize = isNaN(keySizeParsed) ? undefined : keySizeParsed;
-
-    // if name is not defined, keep entire name_string as name
-    let name = values[2];
-    if (name === undefined || name === '') {
-        name = name_string;
+    if (!foundAtLeastOne) {
+        // no key-value pairs found in string
+        // return the entire string as the name
+        result.name = nameString;
     }
-
-    const platform = values[3] === '' ? undefined : values[3];
-    const api = values[4] === '' ? undefined : values[4];
-
-    return {
-        category,
-        keySize,
-        name,
-        platform,
-        api,
-    };
 }
 
 function extractCargoResult(config: Config, output: string): BenchmarkResult[] {
     const lines = output.split(/\r?\n/g);
     const ret = [];
-    const reExtract = /^test (.+)\s+\.\.\. bench:\s+([0-9,.]+) (\w+\/\w+) \(\+\/- ([0-9,.]+)\)$/;
+
+    const reExtract = /^test (.+)\s+\.\.\. bench:\s+([0-9,.]+) ([0-9A-Za-z_\u03BC]+\/\w+)( \(\+\/- [0-9,.]+\))?$/;
     const reComma = /,/g;
 
     for (const line of lines) {
@@ -71,26 +51,19 @@ function extractCargoResult(config: Config, output: string): BenchmarkResult[] {
         if (m === null) {
             continue;
         }
-
-        const name_string = m[1].trim();
         const value = parseFloat(m[2].replace(reComma, ''));
         const unit = m[3].trim();
-        const range = m[4].replace(reComma, '');
 
-        // TODO: error handling
-        const { category, keySize, name, platform, api } = extractMetadataFromName(name_string);
+        // if the range is provided, replace the prefix, the suffix, and any commas.
+        const range = m[4] ? m[4].replace(reComma, '').replace(' (+/- ', '± ').replace(')', '') : undefined;
 
-        ret.push({
-            value,
-            range: `± ${range}`,
-            unit: unit,
-            os: config.os,
-            category,
-            keySize,
-            name,
-            platform,
-            api,
-        });
+        const name_string = m[1].trim();
+
+        const result = { value, range, unit, os: config.os };
+
+        addNameMetadataToResult(result, name_string);
+
+        ret.push(result);
     }
 
     return ret;
