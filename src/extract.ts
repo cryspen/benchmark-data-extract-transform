@@ -43,7 +43,6 @@ function extractCargoResult(config: Config, output: string): BenchmarkResult[] {
     const lines = output.split(/\r?\n/g);
     const ret = [];
 
-    // TODO: key=value
     const reExtract = /^test (.+)\s+\.\.\. bench:\s+([0-9,.]+) ([0-9A-Za-z_\u03BC]+\/\w+)( \(\+\/- ([0-9,.]+)\))?$/;
     const reComma = /,/g;
 
