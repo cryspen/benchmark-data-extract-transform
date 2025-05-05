@@ -45,8 +45,7 @@ rm -rf .release
 mkdir -p .release
 
 cp action.yml action-types.yml package.json package-lock.json .release/
-rsync -R -v dist/src/*.js .release/
-rsync -R -v dist/src/**/*.js .release/
+rsync -R -v dist/*.js .release/
 cp -R node_modules .release/node_modules
 
 git checkout "$version"
@@ -55,15 +54,14 @@ git rm -rf node_modules
 rm -rf node_modules  # remove node_modules/.cache
 
 rm -rf dist
-mkdir -p dist/src
 
 mv .release/action.yml .
 mv .release/action-types.yml .
-mv .release/dist/src/ ./dist/
+mv .release/dist .
 mv .release/*.json .
 mv .release/node_modules .
 
-git add action.yml action-types.yml ./dist/src/*.js package.json package-lock.json node_modules
+git add action.yml action-types.yml ./dist/*.js package.json package-lock.json node_modules
 set +x
 
 echo "Done. Please check 'git diff --cached' to verify changes. If ok, add version tag and push it to remote"
