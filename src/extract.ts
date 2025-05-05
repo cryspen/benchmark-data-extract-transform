@@ -25,9 +25,11 @@ function addNameMetadataToResult(result: BenchmarkResult, nameString: string) {
             // invalid key-value pair
             continue;
         }
-        foundAtLeastOne = true;
         const [key, value] = items;
         result[key] = value;
+
+        // at least one key-value pair was found
+        foundAtLeastOne = true;
     }
 
     if (!foundAtLeastOne) {
