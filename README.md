@@ -15,7 +15,7 @@ Currently supported sources:
 
 ## Metadata format
 
-The benchmark name in the `cargo` benchmarks can be provided as a `/`-separated string with the format `category/key size/name/platform/api`. The key size should be an integer. Some fields in this string can be left blank. Any unspecified or invalid fields will be parsed to `undefined`.
+The benchmark name in the `cargo` benchmarks can be provided as a `/`-separated string where each item represents a key-value pair with the format `key=value`, e.g. `category=ML-KEM/keySize=44/name=PK Validation/platform=neon/api=unpacked`.
 
 ## Output data format
 
