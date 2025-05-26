@@ -82,6 +82,15 @@ describe('extractData()', function () {
         } as Config;
         await A.rejects(extractData(config), /^Error: No benchmark result was found in /);
     });
+
+    it('raises an error when more than one / separator', async function () {
+        const config = {
+            os: 'ubuntu-latest',
+            tool: 'cargo',
+            outputFilePath: path.join(__dirname, 'data', 'extract', 'criterion_invalid.txt'),
+        } as Config;
+        await A.rejects(extractData(config), /^Error: Only one '\/' is allowed as a group\/function separator/);
+    });
 });
 
 describe('localWriteBenchmark()', function () {

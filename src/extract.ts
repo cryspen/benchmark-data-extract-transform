@@ -14,8 +14,14 @@ export interface BenchmarkResult {
 }
 
 function addNameMetadataToResult(result: BenchmarkResult, nameString: string) {
-    // split by separator
-    const keyValuePairs = nameString.split(',');
+    // replace first '/'
+    // only one is allowed, as a Criterion group/function separator
+    const nameStringProcessed = nameString.replace('/', ',');
+
+    if (nameStringProcessed.includes('/')) {
+        throw new Error("Only one '/' is allowed as a group/function separator");
+    }
+    const keyValuePairs = nameStringProcessed.split(',');
 
     let foundAtLeastOne = false;
 
